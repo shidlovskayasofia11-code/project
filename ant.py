@@ -34,11 +34,18 @@ class Ant:
         '''
         Obrót mrówki zależnie od koloru pola.
         '''
+        dir_index = self.directions.index(self.direction)
         current_color = self.pixels[self.current_x, self.current_y]
         if current_color == (255, 255, 255):
-            pass
+            if self.direction == 'Up':
+                self.direction = self.directions[3]
+            else:
+                self.direction = self.directions[dir_index - 1]
         else:
-            pass
+            if self.direction == 'Left':
+                self.direction = self.directions[0]
+            else:
+                self.direction = self.directions[dir_index + 1]
 
     def verify_position(self, x, y):
         '''
