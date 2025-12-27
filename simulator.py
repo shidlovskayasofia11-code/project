@@ -1,4 +1,5 @@
 import os
+from PIL import Image
 
 
 class Simulator:
@@ -12,7 +13,7 @@ class Simulator:
         self.window_height = 0
         self.window_width = 0
         self.chance_black = 0
-        self.num_of_steps = 0
+        self.steps = 0
         self.image_sel = False
         self.users_image = None
         self.console_informtion()
@@ -36,7 +37,10 @@ class Simulator:
             if os.path.exists(path):
                 try:
                     self.image_sel = True
-                    # praca nad obrazem użytkownika
+                    img = Image.open(path).convert('RGB')
+                    img = img.convert('1').convert('RGB')
+                    self.users_image = img
+                    self.window_width, self.window_height = img.size
                 except Exception:
                     print("Plik jest uszkodzony")
             else:
@@ -53,7 +57,6 @@ class Simulator:
                 except ValueError:
                     self.chance_black = 20
         try:
-            self.num_of_steps = int(input("Podaj liczbę kroków symulacji: "))
+            self.steps = int(input("Podaj liczbę kroków symulacji: "))
         except ValueError:
             print("Błędna liczba!")
-        print("Konfiguracja zakończona.\n")
