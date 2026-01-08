@@ -16,7 +16,6 @@ class Simulator:
         self.steps = 0
         self.image_sel = False
         self.users_image = None
-        self.console_informtion()
 
     def console_informtion(self):
         '''
@@ -33,16 +32,9 @@ class Simulator:
             if mode == 2:
                 path = input("Podaj ścieżkę do obrazka: ")
                 if os.path.exists(path):
-                    try:
-                        self.image_sel = True
-                        img = Image.open(path).convert('RGB')
-                        img = img.convert('1').convert('RGB')
-                        self.users_image = img
-                        self.indow, self.w_height = img.size
-                    except Exception:
-                        print("Plik jest uszkodzony")
-                else:
-                    print("Nie znaleziono pliku.")
+                    self.image_sel = True
+                    self.users_image, self.winow_width, self.window_height \
+                        = self.load_and_process_image(path)
             else:
                 self.window_width = int(input("Podaj szerokość planszy: "))
                 self.window_height = int(input("Podaj wysokość planszy: "))
@@ -71,3 +63,18 @@ class Simulator:
         elif which_value == 'chance':
             return 0 <= input <= 100
         return input > 1
+
+    def load_and_process_image(self, path):
+        """
+        Wczytuje obraz, przetwarza go na format czarno-biały
+        i zwraca obiekt obrazu oraz jego wymiary.
+        """
+        try:
+            img = Image.open(path).convert('RGB')
+            img = img.convert('1').convert('RGB')
+            width, height = img.size
+            return img, width, height
+        except FileNotFoundError:
+            print("Nie znaleziono pliku")
+        except Exception:
+            print("Plik jest uszkodzony")
