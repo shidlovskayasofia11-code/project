@@ -14,6 +14,8 @@ class Ant:
         self.pillow_img = pillow_image
         self.window_width = window_width
         self.window_height = window_height
+        if window_width <= 0 or window_height <= 0:
+            raise ValueError("Wymiary planszy muszą być większe od zera")
         self.pixels = pillow_image.load()
         self.current_x = window_width // 2
         self.current_y = window_height // 2

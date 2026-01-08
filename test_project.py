@@ -1,6 +1,6 @@
 from ant import Ant
 # from main import Configuration
-# import pytest
+import pytest
 from PIL import Image
 
 
@@ -10,7 +10,7 @@ def background():
     return img
 
 
-def test_ant_check_size():
+def test_ant_size():
     '''
     Sprawdza, czy klasa Ant przyjmuje wysokość i szerokość poprawnie
     '''
@@ -23,3 +23,11 @@ def test_start_position():
     ant = Ant(background(), 10, 10)
     assert ant.current_x == 5
     assert ant.current_y == 5
+
+
+def test_ant_negative_size():
+    '''
+    Sprawdza, że Ant nie przyjmuje wymiary ujemne
+    '''
+    with pytest.raises(ValueError):
+        Ant(background(), -10, -10)
